@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0A0A0C">
+<title>Candidatures — Voice of God</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="/logo-vog.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --noir:#0A0A0C; --noir-2:#101013; --noir-3:#17171B; --noir-4:#201F24; --ligne:#2A2A31;
+    --or:#D4AF6A; --or-clair:#ECD4A0; --or-profond:#8C6E38;
+    --craie:#ECE7DC; --gris:#9A968C; --gris-fonce:#6A665E;
+    --rouge:#C6604E; --vert:#7FA86B; --bleu:#6E90C6;
+    --display:"Oswald","Arial Narrow",sans-serif;
+    --sans:"Segoe UI",system-ui,-apple-system,Arial,sans-serif;
+    --r:14px;
+  }
+  *{box-sizing:border-box}
+  body{ margin:0; background:var(--noir); color:var(--craie); font-family:var(--sans); font-size:15px; }
+  a{ color:inherit; }
+  ::selection{ background:var(--or); color:#14110A; }
+
+  /* Barre du haut */
+  .bar{ position:sticky; top:0; z-index:20; background:color-mix(in srgb,var(--noir) 88%,transparent);
+    backdrop-filter:blur(12px); border-bottom:1px solid var(--ligne); }
+  .bar-in{ max-width:1240px; margin:auto; padding:12px 20px; display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+  .brand{ display:flex; align-items:center; gap:10px; text-decoration:none; }
+  .brand img{ width:34px; height:34px; border-radius:8px; background:#fff; padding:3px; object-fit:contain; }
+  .brand b{ font-family:var(--display); text-transform:uppercase; letter-spacing:.1em; font-size:1rem; }
+  .brand b span{ color:var(--or); }
+  .grow{ flex:1; }
+  .search{ background:var(--noir-3); border:1px solid var(--ligne); border-radius:100px; color:var(--craie);
+    padding:.55rem 1rem; min-width:200px; outline:none; }
+  .search:focus{ border-color:var(--or-profond); }
+  .btn{ font-family:var(--display); text-transform:uppercase; letter-spacing:.08em; font-size:.8rem; font-weight:600;
+    border-radius:100px; padding:.55rem 1rem; cursor:pointer; border:1px solid var(--ligne);
+    background:var(--noir-3); color:var(--craie); text-decoration:none; display:inline-flex; align-items:center; gap:.4rem;
+    transition:background .2s,border-color .2s,color .2s; }
+  .btn:hover{ border-color:var(--or-profond); }
+  .btn-gold{ background:linear-gradient(180deg,var(--or-clair),var(--or)); color:#14110A; border-color:transparent; }
+  .btn-gold:hover{ filter:brightness(1.06); }
+
+  .wrap{ max-width:1240px; margin:auto; padding:24px 20px 80px; }
+
+  /* Statistiques */
+  .stats{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin-bottom:22px; }
+  .stat{ background:linear-gradient(180deg,var(--noir-3),var(--noir-2)); border:1px solid var(--ligne);
+    border-radius:var(--r); padding:16px 18px; }
+  .stat .k{ font-size:.72rem; text-transform:uppercase; letter-spacing:.14em; color:var(--gris); }
+  .stat .v{ font-family:var(--display); font-size:2rem; line-height:1; margin-top:6px; }
+  .stat.gold .v{ color:var(--or); }
+
+  /* Filtres */
+  .filters{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:16px; }
+  .chip{ font-size:.82rem; padding:.4rem .9rem; border-radius:100px; border:1px solid var(--ligne);
+    background:var(--noir-3); color:var(--gris); cursor:pointer; transition:all .15s; }
+  .chip.active{ background:var(--or); color:#14110A; border-color:var(--or); font-weight:600; }
+  .filters .lbl{ font-size:.74rem; text-transform:uppercase; letter-spacing:.12em; color:var(--gris-fonce); margin-right:2px; }
+
+  /* Tableau */
+  .tablewrap{ border:1px solid var(--ligne); border-radius:var(--r); overflow:hidden; background:var(--noir-2); }
+  .scrollx{ overflow-x:auto; }
+  table{ width:100%; border-collapse:collapse; min-width:760px; }
+  th,td{ text-align:left; padding:12px 14px; border-bottom:1px solid var(--ligne); white-space:nowrap; }
+  th{ font-size:.7rem; text-transform:uppercase; letter-spacing:.1em; color:var(--gris); font-weight:600; background:var(--noir-3); position:sticky; top:0; }
+  tbody tr{ cursor:pointer; transition:background .12s; }
+  tbody tr:hover{ background:var(--noir-3); }
+  td .nm{ font-weight:600; }
+  td .sub{ color:var(--gris); font-size:.82rem; }
+  .deps{ display:flex; gap:4px; flex-wrap:wrap; }
+  .tag{ font-size:.72rem; padding:.15rem .5rem; border-radius:6px; background:var(--noir-4); border:1px solid var(--ligne); color:var(--or-clair); }
+  .badge{ font-size:.72rem; padding:.2rem .6rem; border-radius:100px; font-weight:600; text-transform:uppercase; letter-spacing:.04em; }
+  .b-nouveau{ background:rgba(110,144,198,.16); color:var(--bleu); }
+  .b-vu{ background:rgba(154,150,140,.18); color:var(--gris); }
+  .b-retenu{ background:rgba(127,168,107,.18); color:var(--vert); }
+  .b-refuse{ background:rgba(198,96,78,.16); color:var(--rouge); }
+
+  .empty{ text-align:center; padding:60px 20px; color:var(--gris); }
+  .empty .big{ font-family:var(--display); font-size:1.4rem; color:var(--craie); margin-bottom:.4rem; text-transform:uppercase; letter-spacing:.08em; }
+
+  /* Panneau detail */
+  .overlay{ position:fixed; inset:0; z-index:40; background:rgba(4,4,6,.7); backdrop-filter:blur(4px);
+    display:none; }
+  .overlay.show{ display:block; }
+  .panel{ position:fixed; top:0; right:0; height:100%; width:min(520px,100%); z-index:50;
+    background:linear-gradient(180deg,var(--noir-3),var(--noir-2)); border-left:1px solid var(--ligne);
+    transform:translateX(100%); transition:transform .3s cubic-bezier(.2,.7,.2,1);
+    display:flex; flex-direction:column; }
+  .panel.show{ transform:none; }
+  .panel-head{ padding:20px 22px; border-bottom:1px solid var(--ligne); display:flex; align-items:flex-start; gap:12px; }
+  .panel-head h2{ font-family:var(--display); font-size:1.4rem; margin:0; text-transform:uppercase; letter-spacing:.04em; }
+  .panel-head .close{ margin-left:auto; background:none; border:none; color:var(--gris); font-size:1.6rem; cursor:pointer; line-height:1; }
+  .panel-body{ padding:20px 22px; overflow-y:auto; flex:1; }
+  .row{ padding:11px 0; border-bottom:1px solid var(--ligne); }
+  .row .k{ font-size:.7rem; text-transform:uppercase; letter-spacing:.12em; color:var(--gris); margin-bottom:3px; }
+  .row .v{ color:var(--craie); white-space:pre-wrap; }
+  .row .v.moti{ font-style:italic; color:var(--or-clair); }
+  .row a.tel{ color:var(--or-clair); text-decoration:none; }
+  .status-row{ display:flex; gap:8px; flex-wrap:wrap; margin:6px 0 2px; }
+  .panel-foot{ padding:16px 22px; border-top:1px solid var(--ligne); display:flex; gap:10px; align-items:center; }
+  .btn-danger{ color:var(--rouge); border-color:rgba(198,96,78,.4); }
+  .btn-danger:hover{ background:rgba(198,96,78,.12); }
+  .muted{ color:var(--gris-fonce); font-size:.8rem; }
+
+  @media (max-width:560px){ .bar-in{ gap:10px } .search{ min-width:130px; flex:1 } }
+</style>
+</head>
+<body>
+  <div class="bar">
+    <div class="bar-in">
+      <a class="brand" href="/"><img src="/logo-vog.png" alt=""><b>VOG · <span>Candidatures</span></b></a>
+      <span class="grow"></span>
+      <input class="search" id="search" type="search" placeholder="Rechercher un nom, une ville, un tel…">
+      <a class="btn btn-gold" href="/api/admin/export.csv">⬇ Export Excel/CSV</a>
+      <button class="btn" id="refresh">↻</button>
+      <button class="btn" id="logout">Déconnexion</button>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="stats" id="stats"></div>
+
+    <div class="filters">
+      <span class="lbl">Statut</span>
+      <span class="chip active" data-status="">Tous</span>
+      <span class="chip" data-status="nouveau">Nouveaux</span>
+      <span class="chip" data-status="retenu">Retenus</span>
+      <span class="chip" data-status="vu">Vus</span>
+      <span class="chip" data-status="refuse">Refusés</span>
+      <span class="lbl" style="margin-left:12px">Pôle</span>
+      <span class="chip active" data-dep="">Tous</span>
+      <span class="chip" data-dep="Chantres">🎤 Chantres</span>
+      <span class="chip" data-dep="Instrumentistes">🎹 Instruments</span>
+      <span class="chip" data-dep="Intercession">🙏 Intercession</span>
+      <span class="chip" data-dep="Communication">📢 Comm</span>
+    </div>
+
+    <div class="tablewrap">
+      <div class="scrollx">
+        <table>
+          <thead>
+            <tr>
+              <th>Candidat</th><th>Âge</th><th>Ville</th><th>Téléphone</th>
+              <th>Pôle(s)</th><th>Statut</th><th>Reçue le</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+      <div class="empty" id="empty" style="display:none">
+        <div class="big">Aucune candidature</div>
+        <p>Les candidatures apparaîtront ici dès qu'un jeune remplira le formulaire.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Panneau detail -->
+  <div class="overlay" id="overlay"></div>
+  <aside class="panel" id="panel" aria-hidden="true">
+    <div class="panel-head">
+      <div>
+        <h2 id="pName">—</h2>
+        <div class="muted" id="pMeta"></div>
+      </div>
+      <button class="close" id="pClose" aria-label="Fermer">×</button>
+    </div>
+    <div class="panel-body" id="pBody"></div>
+    <div class="panel-foot">
+      <button class="btn btn-danger" id="pDelete">Supprimer</button>
+      <span class="grow" style="flex:1"></span>
+      <a class="btn btn-gold" id="pWa" target="_blank" rel="noopener">WhatsApp</a>
+    </div>
+  </aside>
+
+<script>
+  const DEPS = ['Chantres', 'Instrumentistes', 'Intercession', 'Communication'];
+  const STATUS_LABELS = { nouveau:'Nouveau', vu:'Vu', retenu:'Retenu', refuse:'Refusé' };
+  let ALL = [];
+  let fStatus = '', fDep = '', fSearch = '';
+  let current = null;
+
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v == null ? '' : v).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const fmtDate = (s) => { const d = new Date(s); return isNaN(d) ? (s||'') : d.toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'}) + ' · ' + d.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}); };
+  const badge = (st) => `<span class="badge b-${esc(st)}">${esc(STATUS_LABELS[st]||st)}</span>`;
+  const depTags = (s) => (s||'').split(',').map(x=>x.trim()).filter(Boolean).map(d=>`<span class="tag">${esc(d)}</span>`).join('');
+
+  async function load() {
+    const res = await fetch('/api/admin/candidatures');
+    if (res.status === 401) { location.href = '/admin/login'; return; }
+    const out = await res.json();
+    ALL = out.candidatures || [];
+    renderStats();
+    render();
+  }
+
+  function renderStats() {
+    const by = (st) => ALL.filter(c => c.status === st).length;
+    const depCount = (d) => ALL.filter(c => (c.departement||'').includes(d)).length;
+    const cards = [
+      { k:'Total', v: ALL.length, gold:true },
+      { k:'Nouveaux', v: by('nouveau') },
+      { k:'Retenus', v: by('retenu') },
+      { k:'🎤 Chantres', v: depCount('Chantres') },
+      { k:'🎹 Instruments', v: depCount('Instrumentistes') },
+      { k:'🙏 Intercession', v: depCount('Intercession') },
+      { k:'📢 Comm', v: depCount('Communication') },
+    ];
+    $('#stats').innerHTML = cards.map(c =>
+      `<div class="stat ${c.gold?'gold':''}"><div class="k">${c.k}</div><div class="v">${c.v}</div></div>`).join('');
+  }
+
+  function filtered() {
+    const q = fSearch.trim().toLowerCase();
+    return ALL.filter(c => {
+      if (fStatus && c.status !== fStatus) return false;
+      if (fDep && !(c.departement||'').includes(fDep)) return false;
+      if (q) {
+        const hay = [c.nom,c.ville,c.tel,c.email,c.eglise,c.instrument].join(' ').toLowerCase();
+        if (!hay.includes(q)) return false;
+      }
+      return true;
+    });
+  }
+
+  function render() {
+    const list = filtered();
+    const tb = $('#tbody');
+    $('#empty').style.display = list.length ? 'none' : 'block';
+    tb.innerHTML = list.map(c => `
+      <tr data-id="${c.id}">
+        <td><div class="nm">${esc(c.nom||'—')}</div><div class="sub">${esc(c.sexe||'')}${c.email? ' · '+esc(c.email):''}</div></td>
+        <td>${c.age!=null?esc(c.age):'—'}</td>
+        <td>${esc(c.ville||'—')}</td>
+        <td>${esc(c.tel||'—')}</td>
+        <td><div class="deps">${depTags(c.departement)||'—'}</div></td>
+        <td>${badge(c.status)}</td>
+        <td class="sub">${fmtDate(c.created_at)}</td>
+      </tr>`).join('');
+    [...tb.querySelectorAll('tr')].forEach(tr =>
+      tr.addEventListener('click', () => openPanel(Number(tr.dataset.id))));
+  }
+
+  /* ---- Panneau detail ---- */
+  function rowHTML(k, v, cls) {
+    if (v == null || v === '') return '';
+    return `<div class="row"><div class="k">${k}</div><div class="v ${cls||''}">${v}</div></div>`;
+  }
+
+  function openPanel(id) {
+    const c = ALL.find(x => x.id === id);
+    if (!c) return;
+    current = c;
+    $('#pName').textContent = c.nom || '—';
+    $('#pMeta').textContent = (c.sexe? c.sexe+' · ':'') + (c.age!=null? c.age+' ans · ':'') + 'reçue le ' + fmtDate(c.created_at);
+    const telClean = (c.tel||'').replace(/[^0-9]/g,'');
+    const statusBtns = ['nouveau','vu','retenu','refuse'].map(s =>
+      `<span class="chip ${c.status===s?'active':''}" data-set="${s}">${STATUS_LABELS[s]}</span>`).join('');
+    $('#pBody').innerHTML =
+      `<div class="row"><div class="k">Statut</div><div class="status-row" id="statusRow">${statusBtns}</div></div>` +
+      rowHTML('Téléphone (WhatsApp)', `<a class="tel" href="https://wa.me/${esc(telClean)}" target="_blank" rel="noopener">${esc(c.tel)}</a>`) +
+      rowHTML('Email', c.email ? `<a class="tel" href="mailto:${esc(c.email)}">${esc(c.email)}</a>` : '') +
+      rowHTML('Ville / Commune', esc(c.ville)) +
+      rowHTML('Église / Assemblée', esc(c.eglise)) +
+      rowHTML('Convertie depuis', esc(c.conversion)) +
+      rowHTML('Baptême', esc(c.bapteme)) +
+      rowHTML('Département(s)', depTags(c.departement)) +
+      rowHTML('Tessiture', esc(c.tessiture)) +
+      rowHTML('Instrument(s)', esc(c.instrument)) +
+      rowHTML('Niveau', esc(c.niveau)) +
+      rowHTML('Expérience', esc(c.experience)) +
+      rowHTML('Disponibilité', esc(c.dispo)) +
+      rowHTML('Motivation', esc(c.motivation), 'moti') +
+      rowHTML('Engagement', c.engagement ? '✓ Confirmé' : '—');
+
+    $('#pWa').href = 'https://wa.me/' + telClean;
+    [...$('#statusRow').querySelectorAll('[data-set]')].forEach(el =>
+      el.addEventListener('click', () => setStatus(c.id, el.dataset.set)));
+
+    $('#overlay').classList.add('show');
+    $('#panel').classList.add('show');
+    $('#panel').setAttribute('aria-hidden','false');
+  }
+
+  function closePanel() {
+    $('#overlay').classList.remove('show');
+    $('#panel').classList.remove('show');
+    $('#panel').setAttribute('aria-hidden','true');
+    current = null;
+  }
+
+  async function setStatus(id, status) {
+    const res = await fetch(`/api/admin/candidatures/${id}/status`, {
+      method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ status })
+    });
+    if (res.ok) {
+      const c = ALL.find(x => x.id === id);
+      if (c) c.status = status;
+      renderStats(); render();
+      if (current && current.id === id) openPanel(id);
+    }
+  }
+
+  async function del(id) {
+    if (!confirm('Supprimer définitivement cette candidature ? Cette action est irréversible.')) return;
+    const res = await fetch(`/api/admin/candidatures/${id}`, { method:'DELETE' });
+    if (res.ok) {
+      ALL = ALL.filter(x => x.id !== id);
+      closePanel(); renderStats(); render();
+    }
+  }
+
+  /* ---- Evenements ---- */
+  $('#search').addEventListener('input', e => { fSearch = e.target.value; render(); });
+  $('#refresh').addEventListener('click', load);
+  $('#logout').addEventListener('click', async () => {
+    await fetch('/admin/logout', { method:'POST' });
+    location.href = '/admin/login';
+  });
+  $('#pClose').addEventListener('click', closePanel);
+  $('#overlay').addEventListener('click', closePanel);
+  $('#pDelete').addEventListener('click', () => current && del(current.id));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closePanel(); });
+
+  [...document.querySelectorAll('.chip[data-status]')].forEach(ch =>
+    ch.addEventListener('click', () => {
+      document.querySelectorAll('.chip[data-status]').forEach(x => x.classList.remove('active'));
+      ch.classList.add('active'); fStatus = ch.dataset.status; render();
+    }));
+  [...document.querySelectorAll('.chip[data-dep]')].forEach(ch =>
+    ch.addEventListener('click', () => {
+      document.querySelectorAll('.chip[data-dep]').forEach(x => x.classList.remove('active'));
+      ch.classList.add('active'); fDep = ch.dataset.dep; render();
+    }));
+
+  load();
+</script>
+</body>
+</html>
