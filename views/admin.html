@@ -108,6 +108,11 @@
   .muted{ color:var(--gris-fonce); font-size:.8rem; }
 
   @media (max-width:560px){ .bar-in{ gap:10px } .search{ min-width:130px; flex:1 } }
+  .tabs{ border-bottom:1px solid var(--ligne); background:var(--noir-2); }
+  .tabs-in{ max-width:1240px; margin:auto; padding:0 20px; display:flex; gap:4px; overflow-x:auto; }
+  .tab{ padding:12px 16px; white-space:nowrap; text-decoration:none; color:var(--gris); font-family:var(--display); text-transform:uppercase; letter-spacing:.06em; font-size:.82rem; border-bottom:2px solid transparent; }
+  .tab:hover{ color:var(--craie); }
+  .tab.active{ color:var(--or); border-bottom-color:var(--or); }
 </style>
 </head>
 <body>
@@ -121,6 +126,11 @@
       <button class="btn" id="logout">Déconnexion</button>
     </div>
   </div>
+  <nav class="tabs"><div class="tabs-in">
+    <a href="/admin" class="tab active">📝 Candidatures</a>
+    <a href="/admin/presences" class="tab">🗓️ Présences</a>
+    <a href="/admin/membres" class="tab">👥 Membres</a>
+  </div></nav>
 
   <div class="wrap">
     <div class="stats" id="stats"></div>

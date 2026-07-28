@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0A0A0C">
+<title>Présences — Voice of God</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="/logo-vog.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{ --noir:#0A0A0C; --noir-2:#101013; --noir-3:#17171B; --noir-4:#201F24; --ligne:#2A2A31;
+    --or:#D4AF6A; --or-clair:#ECD4A0; --or-profond:#8C6E38; --craie:#ECE7DC; --gris:#9A968C; --gris-fonce:#6A665E;
+    --rouge:#C6604E; --vert:#7FA86B; --ambre:#D9A441; --bleu:#6E90C6;
+    --display:"Oswald","Arial Narrow",sans-serif; --sans:"Segoe UI",system-ui,Arial,sans-serif; --r:14px; }
+  *{box-sizing:border-box} body{ margin:0; background:var(--noir); color:var(--craie); font-family:var(--sans); font-size:15px; } a{color:inherit}
+  .bar{ position:sticky; top:0; z-index:20; background:color-mix(in srgb,var(--noir) 88%,transparent); backdrop-filter:blur(12px); border-bottom:1px solid var(--ligne); }
+  .bar-in{ max-width:1240px; margin:auto; padding:12px 20px; display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+  .brand{ display:flex; align-items:center; gap:10px; text-decoration:none; }
+  .brand img{ width:34px; height:34px; border-radius:8px; background:#fff; padding:3px; object-fit:contain; }
+  .brand b{ font-family:var(--display); text-transform:uppercase; letter-spacing:.1em; font-size:1rem; } .brand b span{ color:var(--or); }
+  .grow{ flex:1; }
+  .search{ background:var(--noir-3); border:1px solid var(--ligne); border-radius:100px; color:var(--craie); padding:.55rem 1rem; min-width:180px; outline:none; }
+  .btn{ font-family:var(--display); text-transform:uppercase; letter-spacing:.08em; font-size:.8rem; font-weight:600; border-radius:100px; padding:.55rem 1rem; cursor:pointer; border:1px solid var(--ligne); background:var(--noir-3); color:var(--craie); text-decoration:none; display:inline-flex; align-items:center; gap:.4rem; }
+  .btn:hover{ border-color:var(--or-profond); } .btn-gold{ background:linear-gradient(180deg,var(--or-clair),var(--or)); color:#14110A; border-color:transparent; }
+  .btn-danger{ color:var(--rouge); border-color:rgba(198,96,78,.4); background:transparent; }
+  .tabs{ border-bottom:1px solid var(--ligne); background:var(--noir-2); }
+  .tabs-in{ max-width:1240px; margin:auto; padding:0 20px; display:flex; gap:4px; overflow-x:auto; }
+  .tab{ padding:12px 16px; white-space:nowrap; text-decoration:none; color:var(--gris); font-family:var(--display); text-transform:uppercase; letter-spacing:.06em; font-size:.82rem; border-bottom:2px solid transparent; }
+  .tab:hover{ color:var(--craie); } .tab.active{ color:var(--or); border-bottom-color:var(--or); }
+  .wrap{ max-width:1240px; margin:auto; padding:24px 20px 80px; }
+  .stats{ display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px; margin-bottom:22px; }
+  .stat{ background:linear-gradient(180deg,var(--noir-3),var(--noir-2)); border:1px solid var(--ligne); border-radius:var(--r); padding:15px 16px; }
+  .stat .k{ font-size:.7rem; text-transform:uppercase; letter-spacing:.13em; color:var(--gris); } .stat .v{ font-family:var(--display); font-size:1.9rem; line-height:1; margin-top:6px; }
+  .stat.gold .v{ color:var(--or); } .stat.green .v{ color:var(--vert); } .stat.red .v{ color:var(--rouge); } .stat.amber .v{ color:var(--ambre); }
+  .filters{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:16px; }
+  .chip{ font-size:.8rem; padding:.4rem .85rem; border-radius:100px; border:1px solid var(--ligne); background:var(--noir-3); color:var(--gris); cursor:pointer; }
+  .chip.active{ background:var(--or); color:#14110A; border-color:var(--or); font-weight:600; }
+  .lbl{ font-size:.72rem; text-transform:uppercase; letter-spacing:.12em; color:var(--gris-fonce); }
+  .tablewrap{ border:1px solid var(--ligne); border-radius:var(--r); overflow:hidden; background:var(--noir-2); }
+  .scrollx{ overflow-x:auto; } table{ width:100%; border-collapse:collapse; min-width:820px; }
+  th,td{ text-align:left; padding:12px 14px; border-bottom:1px solid var(--ligne); white-space:nowrap; }
+  th{ font-size:.7rem; text-transform:uppercase; letter-spacing:.1em; color:var(--gris); background:var(--noir-3); }
+  tbody tr{ cursor:pointer; } tbody tr:hover{ background:var(--noir-3); }
+  td .nm{ font-weight:600; } td .sub{ color:var(--gris); font-size:.82rem; }
+  .badge{ font-size:.72rem; padding:.2rem .6rem; border-radius:100px; font-weight:600; text-transform:uppercase; letter-spacing:.04em; }
+  .s-present{ background:rgba(127,168,107,.18); color:var(--vert); } .s-absent{ background:rgba(198,96,78,.16); color:var(--rouge); } .s-retard{ background:rgba(217,164,65,.18); color:var(--ambre); }
+  .v-valable{ background:rgba(127,168,107,.18); color:var(--vert); } .v-a_verifier{ background:rgba(217,164,65,.18); color:var(--ambre); } .v-non_valable{ background:rgba(198,96,78,.16); color:var(--rouge); } .v-present{ background:rgba(110,144,198,.16); color:var(--bleu); }
+  .ia{ font-size:.64rem; color:var(--or-clair); border:1px solid var(--or-profond); border-radius:4px; padding:1px 4px; margin-left:6px; vertical-align:middle; }
+  .empty{ text-align:center; padding:60px 20px; color:var(--gris); } .empty .big{ font-family:var(--display); font-size:1.4rem; color:var(--craie); text-transform:uppercase; letter-spacing:.08em; margin-bottom:.4rem; }
+  .overlay{ position:fixed; inset:0; z-index:40; background:rgba(4,4,6,.7); backdrop-filter:blur(4px); display:none; } .overlay.show{ display:block; }
+  .panel{ position:fixed; top:0; right:0; height:100%; width:min(520px,100%); z-index:50; background:linear-gradient(180deg,var(--noir-3),var(--noir-2)); border-left:1px solid var(--ligne); transform:translateX(100%); transition:transform .3s cubic-bezier(.2,.7,.2,1); display:flex; flex-direction:column; }
+  .panel.show{ transform:none; }
+  .panel-head{ padding:20px 22px; border-bottom:1px solid var(--ligne); display:flex; align-items:flex-start; gap:12px; }
+  .panel-head h2{ font-family:var(--display); font-size:1.4rem; margin:0; text-transform:uppercase; letter-spacing:.04em; } .panel-head .close{ margin-left:auto; background:none; border:none; color:var(--gris); font-size:1.6rem; cursor:pointer; }
+  .panel-body{ padding:20px 22px; overflow-y:auto; flex:1; }
+  .verdict-box{ border-radius:12px; padding:16px; margin-bottom:16px; border:1px solid var(--ligne); }
+  .verdict-box.valable{ background:rgba(127,168,107,.1); border-color:rgba(127,168,107,.4); } .verdict-box.a_verifier{ background:rgba(217,164,65,.1); border-color:rgba(217,164,65,.4); } .verdict-box.non_valable{ background:rgba(198,96,78,.1); border-color:rgba(198,96,78,.4); } .verdict-box.present{ background:rgba(110,144,198,.1); border-color:rgba(110,144,198,.4); }
+  .verdict-box .vt{ font-family:var(--display); text-transform:uppercase; letter-spacing:.05em; font-size:1.05rem; }
+  .verdict-box .ex{ margin:8px 0 0; color:var(--craie); }
+  .facteur{ font-size:.86rem; margin-top:6px; } .facteur .p{ color:var(--vert); } .facteur .m{ color:var(--rouge); }
+  .row{ padding:11px 0; border-bottom:1px solid var(--ligne); } .row .k{ font-size:.7rem; text-transform:uppercase; letter-spacing:.12em; color:var(--gris); margin-bottom:3px; } .row .v{ white-space:pre-wrap; }
+  .panel-foot{ padding:16px 22px; border-top:1px solid var(--ligne); display:flex; gap:10px; }
+  @media (max-width:560px){ .search{ min-width:120px; flex:1 } }
+</style>
+</head>
+<body>
+  <div class="bar"><div class="bar-in">
+    <a class="brand" href="/"><img src="/logo-vog.png" alt=""><b>VOG · <span>Admin</span></b></a>
+    <span class="grow"></span>
+    <input class="search" id="search" type="search" placeholder="Rechercher un nom…">
+    <a class="btn btn-gold" href="/api/admin/presences.csv">⬇ Export CSV</a>
+    <button class="btn" id="refresh">↻</button>
+    <button class="btn" id="logout">Déconnexion</button>
+  </div></div>
+  <nav class="tabs"><div class="tabs-in">
+    <a href="/admin" class="tab">📝 Candidatures</a>
+    <a href="/admin/presences" class="tab active">🗓️ Présences</a>
+    <a href="/admin/membres" class="tab">👥 Membres</a>
+  </div></nav>
+
+  <div class="wrap">
+    <div class="stats" id="stats"></div>
+    <div class="filters">
+      <span class="lbl">Statut</span>
+      <span class="chip active" data-statut="">Tous</span>
+      <span class="chip" data-statut="present">Présents</span>
+      <span class="chip" data-statut="absent">Absents</span>
+      <span class="chip" data-statut="retard">Retards</span>
+      <span class="lbl" style="margin-left:10px">Verdict</span>
+      <span class="chip active" data-verdict="">Tous</span>
+      <span class="chip" data-verdict="valable">Valables</span>
+      <span class="chip" data-verdict="a_verifier">À vérifier</span>
+      <span class="chip" data-verdict="non_valable">Non valables</span>
+    </div>
+    <div class="tablewrap">
+      <div class="scrollx"><table>
+        <thead><tr><th>Membre</th><th>Séance</th><th>Statut</th><th>Motif</th><th>Verdict</th><th>Justif.</th><th>Reçu le</th></tr></thead>
+        <tbody id="tbody"></tbody>
+      </table></div>
+      <div class="empty" id="empty" style="display:none"><div class="big">Aucune déclaration</div><p>Les déclarations de présence apparaîtront ici.</p></div>
+    </div>
+  </div>
+
+  <div class="overlay" id="overlay"></div>
+  <aside class="panel" id="panel" aria-hidden="true">
+    <div class="panel-head"><div><h2 id="pName">—</h2><div class="sub" id="pMeta" style="color:var(--gris)"></div></div><button class="close" id="pClose">×</button></div>
+    <div class="panel-body" id="pBody"></div>
+    <div class="panel-foot"><button class="btn btn-danger" id="pDelete">Supprimer</button></div>
+  </aside>
+
+<script>
+  const STATUT = { present:'Présent', absent:'Absent', retard:'En retard' };
+  const VERDICT = { valable:'Motif valable', a_verifier:'À vérifier', non_valable:'Motif non valable', present:'Présent' };
+  let ALL = [], fStatut = '', fVerdict = '', fSearch = '', current = null;
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v == null ? '' : v).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const fmt = (s) => { const d = new Date(s); return isNaN(d) ? (s||'') : d.toLocaleDateString('fr-FR',{day:'2-digit',month:'short'}) + ' · ' + d.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}); };
+
+  async function load() {
+    const res = await fetch('/api/admin/presences');
+    if (res.status === 401) { location.href = '/admin/login'; return; }
+    ALL = (await res.json()).presences || [];
+    stats(); render();
+  }
+  function stats() {
+    const c = (f) => ALL.filter(f).length;
+    const cards = [
+      { k:'Total', v:ALL.length, cls:'gold' },
+      { k:'Présents', v:c(x=>x.statut==='present'), cls:'green' },
+      { k:'Absents', v:c(x=>x.statut==='absent'), cls:'red' },
+      { k:'Retards', v:c(x=>x.statut==='retard'), cls:'amber' },
+      { k:'Motifs valables', v:c(x=>x.verdict==='valable'), cls:'green' },
+      { k:'À vérifier', v:c(x=>x.verdict==='a_verifier'), cls:'amber' },
+      { k:'Non valables', v:c(x=>x.verdict==='non_valable'), cls:'red' },
+    ];
+    $('#stats').innerHTML = cards.map(x=>`<div class="stat ${x.cls}"><div class="k">${x.k}</div><div class="v">${x.v}</div></div>`).join('');
+  }
+  function filtered() {
+    const q = fSearch.trim().toLowerCase();
+    return ALL.filter(p => {
+      if (fStatut && p.statut !== fStatut) return false;
+      if (fVerdict && p.verdict !== fVerdict) return false;
+      if (q && ![p.nom,p.poste,p.details].join(' ').toLowerCase().includes(q)) return false;
+      return true;
+    });
+  }
+  function render() {
+    const list = filtered();
+    $('#empty').style.display = list.length ? 'none' : 'block';
+    $('#tbody').innerHTML = list.map(p => `
+      <tr data-id="${p.id}">
+        <td><div class="nm">${esc(p.nom||'—')}</div><div class="sub">${esc(p.poste||'')}</div></td>
+        <td>${esc(p.date_seance||'—')}<div class="sub">${esc(p.type_seance||'')}</div></td>
+        <td><span class="badge s-${esc(p.statut)}">${esc(STATUT[p.statut]||p.statut)}</span></td>
+        <td>${esc(p.motif_categorie||'—')}</td>
+        <td><span class="badge v-${esc(p.verdict)}">${esc(VERDICT[p.verdict]||p.verdict)}</span>${p.moteur==='ia'?'<span class="ia">IA</span>':''}</td>
+        <td>${p.has_justificatif?'<a href="/api/admin/presences/'+p.id+'/justificatif" target="_blank" onclick="event.stopPropagation()" style="color:var(--or-clair)">📎 voir</a>':'—'}</td>
+        <td class="sub">${fmt(p.created_at)}</td>
+      </tr>`).join('');
+    [...$('#tbody').querySelectorAll('tr')].forEach(tr => tr.addEventListener('click', () => open(Number(tr.dataset.id))));
+  }
+  function rowH(k,v){ return (v==null||v==='')?'':`<div class="row"><div class="k">${k}</div><div class="v">${v}</div></div>`; }
+  function open(id) {
+    const p = ALL.find(x=>x.id===id); if (!p) return; current = p;
+    $('#pName').textContent = p.nom || '—';
+    $('#pMeta').textContent = (p.poste?p.poste+' · ':'') + 'reçu le ' + fmt(p.created_at);
+    const fact = (p.verdict_facteurs||[]).map(f=>`<div class="facteur"><span class="${f.signe==='+'?'p':'m'}">${f.signe==='+'?'✔':'✕'} ${esc(f.txt)}</span></div>`).join('');
+    const box = `<div class="verdict-box ${esc(p.verdict)}">
+      <div class="vt">${esc(VERDICT[p.verdict]||p.verdict)} ${p.verdict_score!=null?'· '+p.verdict_score+'/100':''} ${p.moteur==='ia'?'<span class="ia">analyse IA</span>':'<span class="ia">règles</span>'}</div>
+      ${p.verdict_explication?'<p class="ex">'+esc(p.verdict_explication)+'</p>':''}${fact}</div>`;
+    const jus = p.has_justificatif ? `<a class="btn btn-gold" href="/api/admin/presences/${p.id}/justificatif" target="_blank">📎 Ouvrir le justificatif</a>` : '<span style="color:var(--gris)">Aucun justificatif transféré</span>';
+    $('#pBody').innerHTML = (p.statut!=='present'?box:`<div class="verdict-box present"><div class="vt">Présence déclarée</div></div>`) +
+      rowH('Séance', esc(p.date_seance) + (p.type_seance?' — '+esc(p.type_seance):'')) +
+      rowH('Statut', esc(STATUT[p.statut]||p.statut)) +
+      rowH('Motif', esc(p.motif_categorie)) +
+      (p.statut==='retard'?rowH('Retard estimé', p.retard_minutes?esc(p.retard_minutes)+' min':''):'') +
+      rowH('Prévenu à l&rsquo;avance', p.statut==='present'?'':(p.prevenu?'Oui':'Non')) +
+      rowH('Explication du membre', esc(p.details)) +
+      rowH('Justificatif', jus);
+    $('#overlay').classList.add('show'); $('#panel').classList.add('show'); $('#panel').setAttribute('aria-hidden','false');
+  }
+  function close() { $('#overlay').classList.remove('show'); $('#panel').classList.remove('show'); current=null; }
+  async function del() { if (!current || !confirm('Supprimer cette déclaration ?')) return;
+    const res = await fetch('/api/admin/presences/'+current.id, { method:'DELETE' });
+    if (res.ok) { ALL = ALL.filter(x=>x.id!==current.id); close(); stats(); render(); } }
+
+  $('#search').addEventListener('input', e => { fSearch = e.target.value; render(); });
+  $('#refresh').addEventListener('click', load);
+  $('#pClose').addEventListener('click', close); $('#overlay').addEventListener('click', close);
+  $('#pDelete').addEventListener('click', del);
+  document.addEventListener('keydown', e => { if (e.key==='Escape') close(); });
+  $('#logout').addEventListener('click', async () => { await fetch('/admin/logout',{method:'POST'}); location.href='/admin/login'; });
+  [...document.querySelectorAll('.chip[data-statut]')].forEach(c => c.addEventListener('click', () => { document.querySelectorAll('.chip[data-statut]').forEach(x=>x.classList.remove('active')); c.classList.add('active'); fStatut=c.dataset.statut; render(); }));
+  [...document.querySelectorAll('.chip[data-verdict]')].forEach(c => c.addEventListener('click', () => { document.querySelectorAll('.chip[data-verdict]').forEach(x=>x.classList.remove('active')); c.classList.add('active'); fVerdict=c.dataset.verdict; render(); }));
+  load();
+</script>
+</body>
+</html>

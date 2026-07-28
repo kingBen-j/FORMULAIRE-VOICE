@@ -2,10 +2,14 @@
 
 Application web complète pour **Voice of God (VOG)** :
 
-- 🔥 une **page vision** cinématographique (noir + or) qui présente la vision, les objectifs, la mission et les départements du groupe ;
+- 🔥 une **page vision** cinématographique (noir + or) : vision, valeurs, objectifs, mission, départements ;
 - 📝 un **formulaire d'adhésion** stylé et vibrant ;
-- 🗄️ un **backend** qui enregistre chaque candidature dans une **base de données** ;
-- 🔐 un **tableau de bord admin** protégé par mot de passe (recherche, filtres, statuts, export Excel/CSV).
+- 🗓️ un **espace présence** (`/presence`) : les membres déclarent présence / absence / retard, transfèrent un **justificatif**, et le site **analyse le motif** et dit s'il tient la route ;
+- 🤖 une **analyse intelligente** des motifs : **IA Claude** si une clé API est configurée, sinon un moteur de **règles** intégré (gratuit) ;
+- 👥 un **registre des membres** (nom + poste) géré depuis l'admin ;
+- 🗄️ un **backend** qui enregistre tout dans une **base de données** ;
+- 🔐 un **tableau de bord admin** protégé (candidatures, présences, membres, filtres, export Excel/CSV) ;
+- 📲 une **PWA installable** : l'app se télécharge sur le téléphone (icône sur l'écran d'accueil).
 
 ---
 
@@ -13,12 +17,15 @@ Application web complète pour **Voice of God (VOG)** :
 
 | Fichier / dossier | Rôle |
 |---|---|
-| `server.js` | Le serveur (Express) : sert le site, reçoit les candidatures, protège l'admin. |
+| `server.js` | Le serveur (Express) : site, candidatures, présences, admin, upload. |
 | `db.js` | Base de données — **PostgreSQL** en ligne, **SQLite** en local (automatique). |
-| `public/index.html` | La page publique (vision + formulaire). |
-| `public/app.js` | Le script du formulaire (envoi + écran de confirmation). |
+| `analyze.js` | Analyse des motifs par **règles** (repli gratuit). |
+| `analyze-ai.js` | Analyse des motifs par **IA Claude** (si `ANTHROPIC_API_KEY`). |
+| `public/index.html` | La page publique (vision + valeurs + formulaire). |
+| `public/presence.html` · `presence.js` | L'espace présence des membres (questionnaire + verdict). |
 | `public/login.html` | La page de connexion admin. |
-| `public/admin.html` | Le tableau de bord des candidatures. |
+| `views/admin.html` · `presences.html` · `membres.html` | Les 3 espaces admin (protégés). |
+| `public/manifest.webmanifest` · `service-worker.js` · `icons/` | La PWA (installation + hors-ligne). |
 | `public/logo-vog.png` | Le logo. |
 | `render.yaml` | Configuration automatique pour Render (site + base de données). |
 | `.env.example` | Modèle des variables d'environnement. |
@@ -73,6 +80,7 @@ Application web complète pour **Voice of God (VOG)** :
 | `SESSION_SECRET` | *(une longue chaîne aléatoire quelconque)* |
 | `CONTACT_WHATSAPP` | `2250711025713` *(le numéro du groupe, chiffres seulement)* |
 | `CONTACT_EMAIL` | *(email du groupe, ou laisse vide)* |
+| `ANTHROPIC_API_KEY` | *(facultatif — active l'analyse IA des motifs)* |
 | `NODE_ENV` | `production` |
 
 5. **Save** → Render redéploie. ✅
@@ -88,6 +96,39 @@ Application web complète pour **Voice of God (VOG)** :
 | `DATABASE_URL` | Base PostgreSQL (fournie par Render). Vide en local → SQLite. | *(vide)* |
 | `CONTACT_WHATSAPP` | Numéro WhatsApp affiché en pied de page (chiffres, sans `+`). | `2250711025713` |
 | `CONTACT_EMAIL` | Email de contact en pied de page (vide = masqué). | *(vide)* |
+| `ANTHROPIC_API_KEY` | *(facultatif)* Active l'analyse **par IA Claude**. Vide → analyse par règles. | *(vide)* |
+| `ANALYSE_MODEL` | Modèle IA utilisé. `claude-haiku-4-5` pour réduire le coût. | `claude-opus-4-8` |
+
+---
+
+## 🗓️ Espace présence & analyse des motifs
+
+- Les membres vont sur **`ton-site.onrender.com/presence`** (lien partageable, ou raccourci de l'app installée).
+- Ils choisissent **Présent / Absent / En retard**, indiquent un **motif**, une **explication**, et peuvent **transférer un justificatif** (photo ou PDF).
+- Le site **analyse le motif** et affiche immédiatement un **verdict** : *Motif valable ✅ / À vérifier ⚠️ / Non valable ❌*, avec les raisons.
+- Le responsable retrouve tout dans **Admin → 🗓️ Présences** (statistiques, filtres, verdicts, et les justificatifs à télécharger).
+- **Les membres** (nom + poste) s'ajoutent dans **Admin → 👥 Membres** ; ils apparaissent alors en suggestion dans le formulaire de présence.
+
+### 🤖 Analyse par IA (facultatif)
+
+Sans rien configurer, l'analyse marche déjà avec un **moteur de règles** intégré (gratuit). Pour une analyse **par intelligence artificielle (Claude)** :
+
+1. Crée une clé sur **[console.anthropic.com](https://console.anthropic.com)** (avec un peu de crédit).
+2. Ajoute la variable **`ANTHROPIC_API_KEY`** sur Render (onglet Environment).
+3. Redéploie. Les verdicts porteront alors la mention **« analyse IA »**.
+
+> 💡 Chaque analyse coûte quelques centimes. Pour réduire le coût, mets `ANALYSE_MODEL=claude-haiku-4-5`.
+
+---
+
+## 📲 Installer l'app sur le téléphone (PWA)
+
+L'app est **installable** : sur le téléphone, ouvre le site dans **Chrome (Android)** ou **Safari (iPhone)**.
+
+- **Android / Chrome** : bouton **« ⤓ Installer »** en haut, ou menu ⋮ → *Installer l'application*.
+- **iPhone / Safari** : bouton **Partager** → *Sur l'écran d'accueil*.
+
+Une icône VOG apparaît sur l'écran d'accueil, comme une vraie application.
 
 ---
 

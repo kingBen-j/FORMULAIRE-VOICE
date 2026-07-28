@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0A0A0C">
+<title>Présence — Voice of God</title>
+<meta name="description" content="Feuille de présence du groupe d'adoration Voice of God (VOG).">
+<link rel="icon" href="/logo-vog.png" type="image/png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/icons/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+<style>
+  :root{ --noir:#0A0A0C; --noir-2:#101013; --noir-3:#17171B; --noir-4:#201F24; --ligne:#2A2A31;
+    --or:#D4AF6A; --or-clair:#ECD4A0; --or-profond:#8C6E38; --craie:#ECE7DC; --gris:#9A968C; --gris-fonce:#6A665E;
+    --rouge:#C6604E; --vert:#7FA86B; --ambre:#D9A441;
+    --display:"Oswald","Arial Narrow",sans-serif; --serif:"Cormorant Garamond",Georgia,serif; --sans:"Segoe UI",system-ui,Arial,sans-serif; }
+  *{box-sizing:border-box} html{ -webkit-text-size-adjust:100%; }
+  body{ margin:0; min-height:100vh; background:radial-gradient(75% 45% at 50% 0%, rgba(212,175,106,.12), transparent 70%), var(--noir); color:var(--craie); font-family:var(--sans); font-size:16px; line-height:1.55; }
+  a{ color:var(--or-clair); }
+  .top{ display:flex; align-items:center; justify-content:space-between; padding:14px 18px; }
+  .brand{ display:flex; align-items:center; gap:10px; text-decoration:none; color:inherit; }
+  .brand img{ width:34px; height:34px; border-radius:8px; background:#fff; padding:3px; object-fit:contain; }
+  .brand b{ font-family:var(--display); text-transform:uppercase; letter-spacing:.12em; font-size:.95rem; } .brand b span{ color:var(--or); }
+  .install{ display:none; font-family:var(--display); text-transform:uppercase; letter-spacing:.08em; font-size:.74rem; border:1px solid var(--or-profond); color:var(--or-clair); background:transparent; border-radius:100px; padding:.45rem .8rem; cursor:pointer; }
+  .wrap{ max-width:640px; margin:auto; padding:8px 18px 60px; }
+  .head{ text-align:center; margin:8px 0 22px; }
+  .head .logo{ width:120px; height:auto; margin:0 auto 8px; display:block; filter:drop-shadow(0 8px 30px rgba(0,0,0,.5)); }
+  .eyebrow{ font-family:var(--display); text-transform:uppercase; letter-spacing:.32em; font-size:.7rem; color:var(--or); }
+  h1{ font-family:var(--display); text-transform:uppercase; font-size:clamp(1.7rem,7vw,2.4rem); letter-spacing:.02em; margin:.2rem 0; }
+  .head p{ color:var(--gris); margin:.3rem 0 0; }
+  .card{ background:linear-gradient(180deg,var(--noir-3),var(--noir-2)); border:1px solid var(--ligne); border-radius:18px; padding:22px; }
+  fieldset{ border:none; padding:0; margin:0 0 8px; }
+  legend{ font-family:var(--display); text-transform:uppercase; letter-spacing:.05em; color:var(--or-clair); font-size:.95rem; margin-bottom:10px; display:flex; align-items:center; gap:.5rem; }
+  legend .n{ width:24px; height:24px; border-radius:50%; border:1px solid var(--or-profond); color:var(--or); display:inline-grid; place-items:center; font-size:.8rem; }
+  label{ display:block; font-size:.74rem; text-transform:uppercase; letter-spacing:.1em; color:var(--gris); margin:14px 0 6px; }
+  input,select,textarea{ width:100%; padding:.8rem .9rem; border-radius:11px; border:1px solid var(--ligne); background:var(--noir); color:var(--craie); font-size:1rem; font-family:inherit; outline:none; transition:border-color .2s, box-shadow .2s; }
+  input:focus,select:focus,textarea:focus{ border-color:var(--or-profond); box-shadow:0 0 0 3px rgba(212,175,106,.16); }
+  textarea{ min-height:90px; resize:vertical; }
+  .frow{ display:grid; grid-template-columns:1fr 1fr; gap:12px; } @media (max-width:520px){ .frow{ grid-template-columns:1fr; } }
+  .seg{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:6px; }
+  .seg label{ margin:0; text-align:center; padding:.8rem .4rem; border:1px solid var(--ligne); border-radius:12px; cursor:pointer; color:var(--craie); text-transform:none; letter-spacing:0; font-size:.95rem; transition:all .15s; }
+  .seg input{ position:absolute; opacity:0; width:0; height:0; }
+  .seg label:has(input:checked){ border-color:var(--or); background:var(--or); color:#14110A; font-weight:600; }
+  .seg .emo{ display:block; font-size:1.3rem; margin-bottom:2px; }
+  .cond{ display:none; } .cond.show{ display:block; animation:fade .3s ease; } @keyframes fade{ from{opacity:0} to{opacity:1} }
+  .toggle{ display:flex; align-items:center; gap:10px; margin-top:14px; cursor:pointer; }
+  .toggle input{ width:auto; }
+  .toggle span{ text-transform:none; letter-spacing:0; color:var(--craie); font-size:.95rem; }
+  .file{ display:flex; align-items:center; gap:10px; }
+  .file .name{ font-size:.85rem; color:var(--gris); }
+  .hint{ color:var(--gris-fonce); font-size:.8rem; margin-top:6px; }
+  .btn{ width:100%; margin-top:20px; padding:.95rem; border:none; cursor:pointer; border-radius:100px; font-family:var(--display); text-transform:uppercase; letter-spacing:.1em; font-size:.98rem; font-weight:600; color:#14110A; background:linear-gradient(180deg,var(--or-clair),var(--or)); }
+  .btn[disabled]{ opacity:.6; }
+  .err{ color:var(--rouge); font-size:.9rem; min-height:1.1em; margin-top:10px; text-align:center; }
+
+  /* Verdict */
+  .verdict{ display:none; text-align:center; }
+  .verdict.show{ display:block; animation:rise .5s cubic-bezier(.2,.7,.2,1) both; }
+  @keyframes rise{ from{opacity:0; transform:translateY(14px)} to{opacity:1; transform:none} }
+  .vhalo{ width:84px; height:84px; margin:6px auto 14px; border-radius:50%; display:grid; place-items:center; font-size:2.4rem; }
+  .valable .vhalo{ background:radial-gradient(circle at 50% 40%, #a7c98d, var(--vert)); box-shadow:0 0 34px rgba(127,168,107,.4); }
+  .a_verifier .vhalo{ background:radial-gradient(circle at 50% 40%, #f0cf86, var(--ambre)); box-shadow:0 0 34px rgba(217,164,65,.4); }
+  .non_valable .vhalo{ background:radial-gradient(circle at 50% 40%, #e0917f, var(--rouge)); box-shadow:0 0 34px rgba(198,96,78,.4); }
+  .present .vhalo{ background:radial-gradient(circle at 50% 40%, var(--or-clair), var(--or)); box-shadow:0 0 34px rgba(212,175,106,.4); }
+  .vtitle{ font-family:var(--display); text-transform:uppercase; letter-spacing:.05em; font-size:1.5rem; }
+  .vexp{ font-family:var(--serif); font-style:italic; font-size:1.2rem; color:var(--craie); margin:10px 0 4px; }
+  .vscore{ color:var(--gris); font-size:.9rem; }
+  .vfact{ text-align:left; margin:18px auto 0; max-width:420px; }
+  .vfact div{ font-size:.9rem; margin:6px 0; } .vfact .p{ color:var(--vert); } .vfact .m{ color:var(--rouge); }
+  .vengine{ font-size:.72rem; color:var(--gris-fonce); margin-top:16px; }
+  .vagain{ margin-top:20px; background:transparent; border:1px solid var(--ligne); color:var(--craie); }
+</style>
+</head>
+<body>
+  <div class="top">
+    <a class="brand" href="/"><img src="/logo-vog.png" alt=""><b>VOICE OF <span>GOD</span></b></a>
+    <button class="install" id="installBtn">⤓ Installer l'app</button>
+  </div>
+
+  <div class="wrap">
+    <div class="head">
+      <img class="logo" src="/logo-vog.png" alt="Voice of God">
+      <p class="eyebrow">Feuille de présence</p>
+      <h1>Ma présence</h1>
+      <p>Signale ta présence, ton absence ou ton retard. Sois sincère — de cœur à cœur.</p>
+    </div>
+
+    <form class="card" id="presForm" novalidate>
+      <input type="text" name="website" id="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+      <input type="hidden" name="membre_id" id="membre_id">
+
+      <fieldset>
+        <legend><span class="n">1</span> Qui es-tu ?</legend>
+        <label for="nom">Ton nom *</label>
+        <input id="nom" name="nom" list="membresList" autocomplete="name" required placeholder="Choisis ou écris ton nom">
+        <datalist id="membresList"></datalist>
+        <label for="poste">Ton poste / fonction</label>
+        <input id="poste" name="poste" placeholder="Ex : Chantre, Piano, Intercession…">
+      </fieldset>
+
+      <fieldset>
+        <legend><span class="n">2</span> La séance</legend>
+        <div class="frow">
+          <div><label for="date_seance">Date *</label><input type="date" id="date_seance" name="date_seance" required></div>
+          <div><label for="type_seance">Type</label>
+            <select id="type_seance" name="type_seance">
+              <option>Répétition</option><option>Culte</option><option>Événement</option><option>Autre</option>
+            </select>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend><span class="n">3</span> Ta présence</legend>
+        <div class="seg">
+          <label><input type="radio" name="statut" value="present" required><span class="emo">🙌</span>Présent(e)</label>
+          <label><input type="radio" name="statut" value="retard"><span class="emo">⏱️</span>En retard</label>
+          <label><input type="radio" name="statut" value="absent"><span class="emo">🚫</span>Absent(e)</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="cond" id="cond-motif">
+        <legend><span class="n">4</span> Ton motif</legend>
+        <label for="motif_categorie">Motif principal</label>
+        <select id="motif_categorie" name="motif_categorie">
+          <option value="">— Choisir —</option>
+          <option>Maladie</option>
+          <option>Hospitalisation</option>
+          <option>Deuil (décès d'un proche)</option>
+          <option>Urgence familiale</option>
+          <option>Examen / cours obligatoire</option>
+          <option>Obligation professionnelle</option>
+          <option>Problème de transport</option>
+          <option>Voyage / déplacement</option>
+          <option>Autre</option>
+        </select>
+
+        <div class="cond" id="cond-retard">
+          <label for="retard_minutes">Retard estimé (minutes)</label>
+          <input type="number" id="retard_minutes" name="retard_minutes" min="1" max="600" placeholder="Ex : 15">
+        </div>
+
+        <label for="details">Explique en quelques mots</label>
+        <textarea id="details" name="details" placeholder="Dis ce qui s'est passé, avec sincérité…"></textarea>
+
+        <label class="toggle"><input type="checkbox" name="prevenu" id="prevenu" value="true"><span>J'avais prévenu un responsable à l'avance</span></label>
+
+        <label for="justificatif">Justificatif (photo ou PDF)</label>
+        <input type="file" id="justificatif" name="justificatif" accept="image/*,application/pdf">
+        <p class="hint">Ex : certificat médical, photo, capture… Max 6 Mo. Facultatif mais recommandé.</p>
+      </fieldset>
+
+      <button type="submit" class="btn" id="submitBtn">Envoyer ma présence</button>
+      <p class="err" id="err"></p>
+    </form>
+
+    <div class="card verdict" id="verdict">
+      <div class="vhalo" id="vhalo"></div>
+      <div class="vtitle" id="vtitle"></div>
+      <p class="vexp" id="vexp"></p>
+      <p class="vscore" id="vscore"></p>
+      <div class="vfact" id="vfact"></div>
+      <p class="vengine" id="vengine"></p>
+      <button class="btn vagain" id="againBtn">Faire une autre déclaration</button>
+    </div>
+  </div>
+
+<script src="/presence.js" defer></script>
+<script>
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('/service-worker.js').catch(()=>{});
+</script>
+</body>
+</html>

@@ -12,7 +12,8 @@
 <meta property="og:image" content="/logo-vog.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/logo-vog.png" type="image/png">
-<link rel="apple-touch-icon" href="/logo-vog.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/icons/apple-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
@@ -365,35 +366,23 @@
 </style>
 
 <style>
-  /* --- Ajouts app (police + ecran succes) --- */
   :root{ --serif: "Cormorant Garamond", Georgia, "Times New Roman", serif; }
-  .form-error{ color: var(--rouge); font-weight:600; margin: 0 0 .3rem; min-height:0; }
+  .form-error{ color: var(--rouge); font-weight:600; margin: 0 0 .3rem; }
   .form-error:empty{ display:none; }
   .btn[disabled]{ opacity:.55; pointer-events:none; }
-
-  /* Ecran de confirmation */
-  .success{
-    position:fixed; inset:0; z-index:200; display:none;
-    align-items:center; justify-content:center; padding: var(--pad);
-    background: radial-gradient(80% 60% at 50% 30%, rgba(212,175,106,.14), transparent 70%), rgba(6,6,8,.92);
-    backdrop-filter: blur(10px);
-  }
+  .nav-install{ display:none; font-family:var(--display); text-transform:uppercase; letter-spacing:.1em; font-size:.78rem; padding:.5rem .9rem; border-radius:100px; border:1px solid var(--or-profond); background:transparent; color:var(--or-clair); cursor:pointer; transition:background .2s, color .2s; }
+  .nav-install:hover{ background:var(--or); color:#14110A; }
+  .success{ position:fixed; inset:0; z-index:200; display:none; align-items:center; justify-content:center; padding: var(--pad);
+    background: radial-gradient(80% 60% at 50% 30%, rgba(212,175,106,.14), transparent 70%), rgba(6,6,8,.92); backdrop-filter: blur(10px); }
   .success.show{ display:flex; animation: sfade .5s ease both; }
   @keyframes sfade{ from{ opacity:0 } to{ opacity:1 } }
-  .success-card{
-    max-width: 560px; width:100%; text-align:center;
-    background: linear-gradient(180deg, var(--noir-3), var(--noir-2));
-    border:1px solid var(--ligne); border-radius: 20px; padding: clamp(28px,6vw,52px);
-    box-shadow: 0 30px 80px rgba(0,0,0,.6);
-    animation: srise .6s cubic-bezier(.2,.7,.2,1) both;
-  }
+  .success-card{ max-width: 560px; width:100%; text-align:center; background: linear-gradient(180deg, var(--noir-3), var(--noir-2));
+    border:1px solid var(--ligne); border-radius: 20px; padding: clamp(28px,6vw,52px); box-shadow: 0 30px 80px rgba(0,0,0,.6);
+    animation: srise .6s cubic-bezier(.2,.7,.2,1) both; }
   @keyframes srise{ from{ opacity:0; transform: translateY(18px) scale(.97) } to{ opacity:1; transform:none } }
-  .success .halo{
-    width:86px; height:86px; margin:0 auto 1.4rem; border-radius:50%;
-    display:grid; place-items:center;
+  .success .halo{ width:86px; height:86px; margin:0 auto 1.4rem; border-radius:50%; display:grid; place-items:center;
     background: radial-gradient(circle at 50% 40%, var(--or-clair), var(--or) 55%, var(--or-profond));
-    box-shadow: 0 0 0 1px rgba(236,212,160,.4), 0 0 40px rgba(212,175,106,.45);
-  }
+    box-shadow: 0 0 0 1px rgba(236,212,160,.4), 0 0 40px rgba(212,175,106,.45); }
   .success .halo svg{ width:42px; height:42px; stroke:#14110A; }
   .success h3{ font-family: var(--display); text-transform:uppercase; letter-spacing:.06em; font-size: clamp(1.6rem,5vw,2.3rem); color: var(--craie); margin:0 0 .6rem; }
   .success p{ color: var(--gris); margin:0 0 1.6rem; }
@@ -413,9 +402,11 @@
         <b>VOICE OF <span>GOD</span></b>
       </a>
       <div class="nav-links">
-        <a href="#vision" class="nav-hide">Vision</a>
+        <a href="#valeurs" class="nav-hide">Valeurs</a>
         <a href="#departements" class="nav-hide">Départements</a>
+        <a href="/presence" class="nav-hide">Présence</a>
         <a href="#postuler" class="nav-cta">Postuler</a>
+        <button type="button" class="nav-install" id="installBtn">⤓ Installer</button>
         <a href="/admin" class="nav-admin" id="adminLink">Espace admin</a>
       </div>
     </div>
@@ -508,6 +499,28 @@
           <h3>Véhiculer l'Évangile</h3>
           <p>Par nos chants et nos mélodies, nous portons un message puissant. Nous voulons être des gagneurs d'âmes par l'adoration, arrachant au royaume des ténèbres les âmes qu'il retient.</p>
           <p class="verse">« Des sacrifices vivants, désireux d'être utilisés puissamment par le Seigneur. »</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALEURS -->
+  <section class="band" id="valeurs">
+    <div class="wrap">
+      <p class="eyebrow" data-reveal>Nos valeurs</p>
+      <h2 class="band-title" data-reveal>Ce qui nous tient debout</h2>
+      <div class="dep-grid">
+        <div class="dep" data-reveal>
+          <h3>Amour de Christ</h3>
+          <p>Tout part de Lui et retourne à Lui. Nous adorons d'abord par amour — jamais par simple devoir.</p>
+        </div>
+        <div class="dep" data-reveal>
+          <h3>Performance de qualité</h3>
+          <p>L'excellence comme offrande. Nous donnons le meilleur, avec rigueur, préparation et cœur.</p>
+        </div>
+        <div class="dep" data-reveal>
+          <h3>Vie d'intimité avec le Seigneur</h3>
+          <p>Notre force vient du secret de Sa présence, cultivé chaque jour, loin des regards.</p>
         </div>
       </div>
     </div>
@@ -707,6 +720,7 @@
       <p class="verse">« VOG annonce un réveil. Une vision, un mouvement, une adoration qui réveille. »</p>
       <div class="fcontact">
         <span>📍 Côte d'Ivoire</span>
+        <a href="/presence">🗓️ Ma présence</a>
         <a href="https://wa.me/2250000000000" id="waFooter">📱 WhatsApp</a>
         <a href="mailto:contact@voiceofgod.ci" id="mailFooter">✉️ contact@voiceofgod.ci</a>
       </div>
@@ -731,7 +745,6 @@
 </svg>
 
 
-<!-- Ecran de confirmation apres envoi -->
 <div class="success" id="successScreen" aria-hidden="true" role="dialog" aria-modal="true">
   <div class="success-card">
     <div class="halo">
@@ -748,5 +761,8 @@
 </div>
 
 <script src="/app.js" defer></script>
+<script>
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('/service-worker.js').catch(function(){});
+</script>
 </body>
 </html>

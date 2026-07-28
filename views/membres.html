@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0A0A0C">
+<title>Membres — Voice of God</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="/logo-vog.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{ --noir:#0A0A0C; --noir-2:#101013; --noir-3:#17171B; --noir-4:#201F24; --ligne:#2A2A31;
+    --or:#D4AF6A; --or-clair:#ECD4A0; --or-profond:#8C6E38; --craie:#ECE7DC; --gris:#9A968C; --gris-fonce:#6A665E;
+    --rouge:#C6604E; --display:"Oswald","Arial Narrow",sans-serif; --sans:"Segoe UI",system-ui,Arial,sans-serif; --r:14px; }
+  *{box-sizing:border-box} body{ margin:0; background:var(--noir); color:var(--craie); font-family:var(--sans); font-size:15px; }
+  a{ color:inherit; }
+  .bar{ position:sticky; top:0; z-index:20; background:color-mix(in srgb,var(--noir) 88%,transparent); backdrop-filter:blur(12px); border-bottom:1px solid var(--ligne); }
+  .bar-in{ max-width:1100px; margin:auto; padding:12px 20px; display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+  .brand{ display:flex; align-items:center; gap:10px; text-decoration:none; }
+  .brand img{ width:34px; height:34px; border-radius:8px; background:#fff; padding:3px; object-fit:contain; }
+  .brand b{ font-family:var(--display); text-transform:uppercase; letter-spacing:.1em; font-size:1rem; }
+  .brand b span{ color:var(--or); } .grow{ flex:1; }
+  .btn{ font-family:var(--display); text-transform:uppercase; letter-spacing:.08em; font-size:.8rem; font-weight:600; border-radius:100px; padding:.55rem 1rem; cursor:pointer; border:1px solid var(--ligne); background:var(--noir-3); color:var(--craie); text-decoration:none; display:inline-flex; align-items:center; gap:.4rem; transition:all .2s; }
+  .btn:hover{ border-color:var(--or-profond); }
+  .btn-gold{ background:linear-gradient(180deg,var(--or-clair),var(--or)); color:#14110A; border-color:transparent; }
+  .btn-gold:hover{ filter:brightness(1.06); }
+  .btn-danger{ color:var(--rouge); border-color:rgba(198,96,78,.4); background:transparent; }
+  .tabs{ border-bottom:1px solid var(--ligne); background:var(--noir-2); }
+  .tabs-in{ max-width:1100px; margin:auto; padding:0 20px; display:flex; gap:4px; overflow-x:auto; }
+  .tab{ padding:12px 16px; white-space:nowrap; text-decoration:none; color:var(--gris); font-family:var(--display); text-transform:uppercase; letter-spacing:.06em; font-size:.82rem; border-bottom:2px solid transparent; }
+  .tab:hover{ color:var(--craie); } .tab.active{ color:var(--or); border-bottom-color:var(--or); }
+  .wrap{ max-width:1100px; margin:auto; padding:24px 20px 80px; }
+  .grid{ display:grid; grid-template-columns:1.1fr 2fr; gap:22px; align-items:start; }
+  @media (max-width:800px){ .grid{ grid-template-columns:1fr; } }
+  .card{ background:linear-gradient(180deg,var(--noir-3),var(--noir-2)); border:1px solid var(--ligne); border-radius:var(--r); padding:22px; }
+  h2{ font-family:var(--display); text-transform:uppercase; letter-spacing:.05em; font-size:1.2rem; margin:0 0 16px; }
+  h2 span{ color:var(--or); }
+  label{ display:block; font-size:.74rem; text-transform:uppercase; letter-spacing:.1em; color:var(--gris); margin:14px 0 6px; }
+  input{ width:100%; padding:.75rem .9rem; border-radius:10px; border:1px solid var(--ligne); background:var(--noir); color:var(--craie); font-size:1rem; outline:none; }
+  input:focus{ border-color:var(--or-profond); }
+  .add{ width:100%; margin-top:18px; justify-content:center; }
+  .err{ color:var(--rouge); font-size:.85rem; min-height:1.1em; margin-top:8px; }
+  table{ width:100%; border-collapse:collapse; }
+  th,td{ text-align:left; padding:11px 12px; border-bottom:1px solid var(--ligne); }
+  th{ font-size:.7rem; text-transform:uppercase; letter-spacing:.1em; color:var(--gris); }
+  td .nm{ font-weight:600; } .tag{ font-size:.74rem; padding:.15rem .5rem; border-radius:6px; background:var(--noir-4); border:1px solid var(--ligne); color:var(--or-clair); }
+  .count{ color:var(--gris); font-size:.85rem; margin-bottom:12px; }
+  .empty{ color:var(--gris); text-align:center; padding:40px 10px; }
+  .x{ background:none; border:none; color:var(--gris-fonce); cursor:pointer; font-size:1.1rem; }
+  .x:hover{ color:var(--rouge); }
+</style>
+</head>
+<body>
+  <div class="bar"><div class="bar-in">
+    <a class="brand" href="/"><img src="/logo-vog.png" alt=""><b>VOG · <span>Admin</span></b></a>
+    <span class="grow"></span>
+    <button class="btn" id="logout">Déconnexion</button>
+  </div></div>
+  <nav class="tabs"><div class="tabs-in">
+    <a href="/admin" class="tab">📝 Candidatures</a>
+    <a href="/admin/presences" class="tab">🗓️ Présences</a>
+    <a href="/admin/membres" class="tab active">👥 Membres</a>
+  </div></nav>
+
+  <div class="wrap">
+    <div class="grid">
+      <div class="card">
+        <h2>Ajouter un <span>membre</span></h2>
+        <form id="addForm" autocomplete="off">
+          <label for="nom">Nom & prénoms *</label>
+          <input id="nom" name="nom" required>
+          <label for="poste">Poste / Fonction</label>
+          <input id="poste" name="poste" list="postes" placeholder="Ex : Chantre (Soprano), Piano…">
+          <datalist id="postes">
+            <option value="Responsable du groupe"></option>
+            <option value="Chef de louange"></option>
+            <option value="Chantre — Soprano"></option>
+            <option value="Chantre — Alto"></option>
+            <option value="Chantre — Ténor"></option>
+            <option value="Chantre — Basse"></option>
+            <option value="Choriste"></option>
+            <option value="Piano / Clavier"></option>
+            <option value="Guitare"></option>
+            <option value="Guitare basse"></option>
+            <option value="Batterie"></option>
+            <option value="Intercesseur"></option>
+            <option value="Communication / Média"></option>
+          </datalist>
+          <label for="telephone">Téléphone (WhatsApp)</label>
+          <input id="telephone" name="telephone" placeholder="Ex : +225 07 …">
+          <button type="submit" class="btn btn-gold add" id="addBtn">Ajouter au groupe</button>
+          <p class="err" id="err"></p>
+        </form>
+      </div>
+
+      <div class="card">
+        <h2>Le <span>groupe</span></h2>
+        <p class="count" id="count"></p>
+        <table><thead><tr><th>Membre</th><th>Poste</th><th>Téléphone</th><th></th></tr></thead>
+        <tbody id="tbody"></tbody></table>
+        <div class="empty" id="empty" style="display:none">Aucun membre pour l'instant. Ajoute les membres actuels du groupe à gauche.</div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v == null ? '' : v).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+  async function load() {
+    const res = await fetch('/api/admin/membres');
+    if (res.status === 401) { location.href = '/admin/login'; return; }
+    const { membres } = await res.json();
+    $('#count').textContent = membres.length + ' membre' + (membres.length > 1 ? 's' : '');
+    $('#empty').style.display = membres.length ? 'none' : 'block';
+    $('#tbody').innerHTML = membres.map(m => `
+      <tr><td><div class="nm">${esc(m.nom)}</div></td>
+      <td>${m.poste ? '<span class="tag">' + esc(m.poste) + '</span>' : '—'}</td>
+      <td>${m.telephone ? '<a style="color:var(--or-clair);text-decoration:none" href="https://wa.me/' + esc(String(m.telephone).replace(/[^0-9]/g,'')) + '" target="_blank">' + esc(m.telephone) + '</a>' : '—'}</td>
+      <td style="text-align:right"><button class="x" data-id="${m.id}" title="Supprimer">✕</button></td></tr>`).join('');
+    [...$('#tbody').querySelectorAll('.x')].forEach(b => b.addEventListener('click', () => del(Number(b.dataset.id))));
+  }
+
+  $('#addForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    $('#err').textContent = '';
+    const btn = $('#addBtn'); btn.disabled = true; btn.textContent = 'Ajout…';
+    try {
+      const body = { nom: $('#nom').value, poste: $('#poste').value, telephone: $('#telephone').value };
+      const res = await fetch('/api/admin/membres', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+      const out = await res.json().catch(() => ({}));
+      if (!res.ok || !out.ok) throw new Error(out.error || 'Erreur.');
+      $('#addForm').reset(); load();
+    } catch (e2) { $('#err').textContent = e2.message; }
+    finally { btn.disabled = false; btn.textContent = 'Ajouter au groupe'; }
+  });
+
+  async function del(id) {
+    if (!confirm('Retirer ce membre du groupe ?')) return;
+    const res = await fetch('/api/admin/membres/' + id, { method: 'DELETE' });
+    if (res.ok) load();
+  }
+
+  $('#logout').addEventListener('click', async () => { await fetch('/admin/logout', { method: 'POST' }); location.href = '/admin/login'; });
+  load();
+</script>
+</body>
+</html>

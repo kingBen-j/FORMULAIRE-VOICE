@@ -244,4 +244,23 @@
       }
     });
   }
+
+  /* ---------- PWA : bouton « Installer » ---------- */
+  let deferredPrompt = null;
+  const installBtn = $('#installBtn');
+  addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    if (installBtn) installBtn.style.display = 'inline-block';
+  });
+  if (installBtn) {
+    installBtn.addEventListener('click', async () => {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      await deferredPrompt.userChoice;
+      deferredPrompt = null;
+      installBtn.style.display = 'none';
+    });
+  }
+  addEventListener('appinstalled', () => { if (installBtn) installBtn.style.display = 'none'; });
 })();
