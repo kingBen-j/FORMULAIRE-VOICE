@@ -16,7 +16,7 @@ services:
       - key: NODE_ENV
         value: production
       - key: ADMIN_PASSWORD
-        sync: false          # <- a saisir dans le dashboard Render (secret)
+        value: "VOG2026"     # <- code du tableau de bord admin (modifiable sur Render)
       - key: SESSION_SECRET
         generateValue: true  # <- Render genere une valeur aleatoire
       - key: CONTACT_WHATSAPP

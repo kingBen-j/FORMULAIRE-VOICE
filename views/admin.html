@@ -107,7 +107,18 @@
   .btn-danger:hover{ background:rgba(198,96,78,.12); }
   .muted{ color:var(--gris-fonce); font-size:.8rem; }
 
-  @media (max-width:560px){ .bar-in{ gap:10px } .search{ min-width:130px; flex:1 } }
+  @media (max-width:640px){
+    .bar-in{ gap:10px } .search{ min-width:0; flex:1 1 100%; order:5 }
+    .stats{ grid-template-columns:repeat(2,1fr); }
+    /* Tableau -> cartes empilées */
+    table{ min-width:0; }
+    thead{ display:none; }
+    tbody tr{ display:block; border:1px solid var(--ligne); border-radius:12px; margin:0 0 10px; padding:6px 12px; background:var(--noir-2); }
+    tbody td{ display:flex; justify-content:space-between; align-items:center; gap:14px; text-align:right; white-space:normal; border-bottom:1px solid var(--ligne); padding:9px 0; }
+    tbody tr td:last-child{ border-bottom:none; }
+    tbody td::before{ content:attr(data-label); text-align:left; color:var(--gris); font-size:.68rem; text-transform:uppercase; letter-spacing:.08em; flex:0 0 auto; }
+    tbody td .deps{ justify-content:flex-end; }
+  }
   .tabs{ border-bottom:1px solid var(--ligne); background:var(--noir-2); }
   .tabs-in{ max-width:1240px; margin:auto; padding:0 20px; display:flex; gap:4px; overflow-x:auto; }
   .tab{ padding:12px 16px; white-space:nowrap; text-decoration:none; color:var(--gris); font-family:var(--display); text-transform:uppercase; letter-spacing:.06em; font-size:.82rem; border-bottom:2px solid transparent; }
@@ -244,13 +255,13 @@
     $('#empty').style.display = list.length ? 'none' : 'block';
     tb.innerHTML = list.map(c => `
       <tr data-id="${c.id}">
-        <td><div class="nm">${esc(c.nom||'—')}</div><div class="sub">${esc(c.sexe||'')}${c.email? ' · '+esc(c.email):''}</div></td>
-        <td>${c.age!=null?esc(c.age):'—'}</td>
-        <td>${esc(c.ville||'—')}</td>
-        <td>${esc(c.tel||'—')}</td>
-        <td><div class="deps">${depTags(c.departement)||'—'}</div></td>
-        <td>${badge(c.status)}</td>
-        <td class="sub">${fmtDate(c.created_at)}</td>
+        <td data-label="Candidat"><div class="nm">${esc(c.nom||'—')}</div><div class="sub">${esc(c.sexe||'')}${c.email? ' · '+esc(c.email):''}</div></td>
+        <td data-label="Âge">${c.age!=null?esc(c.age):'—'}</td>
+        <td data-label="Ville">${esc(c.ville||'—')}</td>
+        <td data-label="Téléphone">${esc(c.tel||'—')}</td>
+        <td data-label="Pôle(s)"><div class="deps">${depTags(c.departement)||'—'}</div></td>
+        <td data-label="Statut">${badge(c.status)}</td>
+        <td data-label="Reçue le" class="sub">${fmtDate(c.created_at)}</td>
       </tr>`).join('');
     [...tb.querySelectorAll('tr')].forEach(tr =>
       tr.addEventListener('click', () => openPanel(Number(tr.dataset.id))));

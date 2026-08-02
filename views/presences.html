@@ -63,7 +63,16 @@
   .facteur{ font-size:.86rem; margin-top:6px; } .facteur .p{ color:var(--vert); } .facteur .m{ color:var(--rouge); }
   .row{ padding:11px 0; border-bottom:1px solid var(--ligne); } .row .k{ font-size:.7rem; text-transform:uppercase; letter-spacing:.12em; color:var(--gris); margin-bottom:3px; } .row .v{ white-space:pre-wrap; }
   .panel-foot{ padding:16px 22px; border-top:1px solid var(--ligne); display:flex; gap:10px; }
-  @media (max-width:560px){ .search{ min-width:120px; flex:1 } }
+  @media (max-width:640px){
+    .search{ min-width:0; flex:1 1 100%; order:5 }
+    .stats{ grid-template-columns:repeat(2,1fr); }
+    table{ min-width:0; }
+    thead{ display:none; }
+    tbody tr{ display:block; border:1px solid var(--ligne); border-radius:12px; margin:0 0 10px; padding:6px 12px; background:var(--noir-2); }
+    tbody td{ display:flex; justify-content:space-between; align-items:center; gap:14px; text-align:right; white-space:normal; border-bottom:1px solid var(--ligne); padding:9px 0; }
+    tbody tr td:last-child{ border-bottom:none; }
+    tbody td::before{ content:attr(data-label); text-align:left; color:var(--gris); font-size:.68rem; text-transform:uppercase; letter-spacing:.08em; flex:0 0 auto; }
+  }
 </style>
 </head>
 <body>
@@ -152,13 +161,13 @@
     $('#empty').style.display = list.length ? 'none' : 'block';
     $('#tbody').innerHTML = list.map(p => `
       <tr data-id="${p.id}">
-        <td><div class="nm">${esc(p.nom||'—')}</div><div class="sub">${esc(p.poste||'')}</div></td>
-        <td>${esc(p.date_seance||'—')}<div class="sub">${esc(p.type_seance||'')}</div></td>
-        <td><span class="badge s-${esc(p.statut)}">${esc(STATUT[p.statut]||p.statut)}</span></td>
-        <td>${esc(p.motif_categorie||'—')}</td>
-        <td><span class="badge v-${esc(p.verdict)}">${esc(VERDICT[p.verdict]||p.verdict)}</span>${p.moteur==='ia'?'<span class="ia">IA</span>':''}</td>
-        <td>${p.has_justificatif?'<a href="/api/admin/presences/'+p.id+'/justificatif" target="_blank" onclick="event.stopPropagation()" style="color:var(--or-clair)">📎 voir</a>':'—'}</td>
-        <td class="sub">${fmt(p.created_at)}</td>
+        <td data-label="Membre"><div class="nm">${esc(p.nom||'—')}</div><div class="sub">${esc(p.poste||'')}</div></td>
+        <td data-label="Séance">${esc(p.date_seance||'—')}<div class="sub">${esc(p.type_seance||'')}</div></td>
+        <td data-label="Statut"><span class="badge s-${esc(p.statut)}">${esc(STATUT[p.statut]||p.statut)}</span></td>
+        <td data-label="Motif">${esc(p.motif_categorie||'—')}</td>
+        <td data-label="Verdict"><span class="badge v-${esc(p.verdict)}">${esc(VERDICT[p.verdict]||p.verdict)}</span>${p.moteur==='ia'?'<span class="ia">IA</span>':''}</td>
+        <td data-label="Justif.">${p.has_justificatif?'<a href="/api/admin/presences/'+p.id+'/justificatif" target="_blank" onclick="event.stopPropagation()" style="color:var(--or-clair)">📎 voir</a>':'—'}</td>
+        <td data-label="Reçu le" class="sub">${fmt(p.created_at)}</td>
       </tr>`).join('');
     [...$('#tbody').querySelectorAll('tr')].forEach(tr => tr.addEventListener('click', () => open(Number(tr.dataset.id))));
   }
